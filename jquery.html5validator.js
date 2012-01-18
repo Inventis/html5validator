@@ -25,7 +25,9 @@
         this.element = element;
 
         this.options = $.extend( {}, defaults, options );
-        this.options.messages = $.extend( {}, defaults.messages, options.messages );
+        if ( this.options ) {
+            this.options.messages = $.extend( {}, defaults.messages, options.messages );
+        }
 
         this._defaults = defaults;
         this._name = pluginName;
