@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<!-- CSS -->
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+<style type="text/css">
+      /* Override some defaults */
+      html, body {
+        background-color: #eee;
+      }
+      .container > footer p {
+        text-align: center; /* center align it with the container */
+      }
+      .container {
+        width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+      }
+
+      /* The white background content wrapper */
+      .content {
+        background-color: #fff;
+        padding: 20px;
+        margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+        -webkit-border-radius: 0 0 6px 6px;
+           -moz-border-radius: 0 0 6px 6px;
+                border-radius: 0 0 6px 6px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      }
+
+      /* Page header tweaks */
+      .page-header { background-color: #f5f5f5; padding: 20px 20px 10px; margin: -20px -20px 20px; }
+      
+      span.error { display: block; color: red; line-height: 18px; margin-top: 5px; }
+
+    </style>
+
+<!-- Javascript -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="jquery.html5validator.js"></script>
+
+<!-- DEMO -->
+<div class="container">
+    <div class="content">
+        <div class="page-header">
+            <h1>HTML5validator</h1>
+        </div>
+        <div class="span14">
+            <h2>Documentation</h2>
+            <h3>Config</h3>
+            <table class="zebra-striped">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>disableBrowserValidation</td>
+                        <td>
+                            When true default browser validation will be disabled.<br />
+                            This means we set the attribute 'novalidate' to the form.<br />
+                            <i>Defaults to true</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>disableAutoValidation</td>
+                        <td>
+                            When false the plugin will automaticly scan for the new HTML5 input types and attributes and apply the correct validation.<br />
+                            <i>Defaults to false</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>messages</td>
+                        <td>Override default messages with your own version. (e.g. translated versions)</td>
+                    <tr>
+                        <td>fields</td>
+                        <td>
+                            This gives you the benefit of defining the sequence the rules are executed. Custom validators must be called this way.<br />
+                            Example: <code> fields: { 'email': 'required|email' } </code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>customValidators</td>
+                        <td>
+                            An object containing custom defined validators.<br />
+                            Example: <code> { custom_validator: function( element ) { ... } } </code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>showError</td>
+                        <td>
+                            Custom callback called when an error is shown. This function should return the element you created to display the error.<br />
+                            By default the plugin will add a <code>&lt;span class="error"&gt;</code> after the validated element.<br />
+                            Example: <code> showErrors: function( element, errorType, errorMessage ) { ... } </code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>hideErrors</td>
+                        <td>Custom callback called before the plugin starts validating elements. Elements returns by the showErrors function are automaticly removed.</td>
+                    <tr>
+                        <td>success</td>
+                        <td>Custom callback called when validation has succeeded.</td>
+                </tbody>
+            </table>
+            
+            <h3>Validators</h3>
+            <p>The validators are executed in this sequence.</p>
+            <table class="zebra-striped">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>required</td>
+                        <td>
+                            Tests if the value isn't empty.<br />
+                            <i>Default message: This field is required</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>minlength</td>
+                        <td>
+                            Tests if the value has a minimum length.<br />
+                            The length is defined by <code>data-minlength</code> or in the configuration with <code>'email': 'minlength:2'</code><br />
+                            <i>Default message: The minimum length of this field is not met</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>maxlength</td>
+                        <td>
+                            Tests if the value hasn't exceeded the maximum length.<br />
+                            The length is defined by <code>data-maxlength</code> or in the configuration with <code>'email': 'maxlength:10'</code><br />
+                            <i>Default message: The content of this field is to long</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>
+                            Tests if the value is an email address.<br />
+                            <i>Default message: This is not an email address</i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Custom messages for each element</h3>
+            <p>
+                You can define a custom errormessage for each element. Just give the element a data-attribute called data-[validatorName]-error containing your custom error.<br />
+            </p>
+            <p>
+                Example: <code> &lt;input type="email" name="email" data-required-error="Niet ingevuld." required /&gt; </code>
+            </p>
+            
+            <h2>Future improvements</h2>
+            <ul>
+                <li>Live validation</li>
+                <li>Improve message for rules with optoins (e.g. minlength, mexlength, ...) containg the options.</li>
+            </ul>
+            
+            <h2>Demo</h2>
+            <script>
+                $(function() {
+                    $('form').html5validator({
+                        messages: {
+                            stijn: 'Stijn'
+                        },
+                        customValidators: {
+                            stijn: function( el ) {
+                                return true;
+                            }
+                        },
+                        fields: {
+                            email: 'stijn'
+                        },
+                        success: function() {
+                            alert( 'w00t!' );
+                            return false;
+                        }
+                    });
+                });
+            </script>
+            <form class="form-stacked">
+                <label>Input with type="email" and attribute required</label>
+                <input type="email" name="email" data-minlength="2" required />
+              
+                <div class="actions">
+                    <button type="submit" class="btn primary">Validate</button>
+                </div>
+                    
+          </form>
+          
+      </div><!-- /span14 -->
+  </div>
+</div> <!-- /container -->
