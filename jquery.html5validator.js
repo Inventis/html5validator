@@ -14,7 +14,7 @@
             messages: {
                 required: 'This field is required',
                 minlength: 'The minimum length of this field is not met',
-                maxlength: 'The content of this field is to long',
+                maxlength: 'The content of this field is too long',
                 email: 'This is not an email address'
             },
             customValidators: {}
