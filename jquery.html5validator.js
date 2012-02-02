@@ -69,7 +69,7 @@
         // validation rules set in the config
         if ( this.options.fields ) {
             for ( field in this.options.fields ) {
-                // check if the field exits
+                // check if the field exists
                 var fieldEl = $('[name=' + field + ']', this.element);
                 if ( fieldEl ) {
                     // extract validator rules
