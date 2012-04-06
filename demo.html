@@ -30,7 +30,9 @@
       /* Page header tweaks */
       .page-header { background-color: #f5f5f5; padding: 20px 20px 10px; margin: -20px -20px 20px; }
       
-      span.error { display: block; color: red; line-height: 18px; margin-top: 5px; }
+      span.inline-help { display: block; color: red; line-height: 18px; margin-top: 5px; }
+
+      .entry.error input { border-color: red; color: red; }
 
     </style>
 
@@ -45,6 +47,44 @@
             <h1>HTML5validator</h1>
         </div>
         <div class="span14">
+            <h2>Demo</h2>
+            <script>
+                $(function() {
+                    $('form').html5validator({
+                        /*messages: {
+                            foo: 'bar'
+                        },
+                        customValidators: {
+                            foo: function( el ) {
+                                return true;
+                            }
+                        },
+                        fields: {
+                            email: 'foo'
+                        },*/
+                        success: function() {
+                            alert( 'w00t!' );
+                            return false;
+                        }
+                    });
+                });
+            </script>
+            <form class="form-stacked">
+                <div class="entry">
+                    <label>E-mail (required)</label>
+                    <input type="email" name="email" required />
+                </div>
+                <div class="entry">
+                    <label>
+                        <input type="checkbox" name="newsletter" value="1" required />
+                        Subscribe to our newsletter
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn primary">Validate</button>
+                </div>
+
+            </form>
             <h2>Documentation</h2>
             <h3>Config</h3>
             <table class="zebra-striped">
@@ -160,38 +200,6 @@
                 <li>Live validation</li>
                 <li>Improve message for rules with optoins (e.g. minlength, mexlength, ...) containg the options.</li>
             </ul>
-            
-            <h2>Demo</h2>
-            <script>
-                $(function() {
-                    $('form').html5validator({
-                        messages: {
-                            stijn: 'Stijn'
-                        },
-                        customValidators: {
-                            stijn: function( el ) {
-                                return true;
-                            }
-                        },
-                        fields: {
-                            email: 'stijn'
-                        },
-                        success: function() {
-                            alert( 'w00t!' );
-                            return false;
-                        }
-                    });
-                });
-            </script>
-            <form class="form-stacked">
-                <label>Input with type="email" and attribute required</label>
-                <input type="email" name="email" data-minlength="2" required />
-              
-                <div class="actions">
-                    <button type="submit" class="btn primary">Validate</button>
-                </div>
-                    
-          </form>
           
       </div><!-- /span14 -->
   </div>

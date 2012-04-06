@@ -1,8 +1,5 @@
 /*!
- * jQuery lightweight plugin boilerplate
- * Original author: @ajpiano
- * Further changes, comments: @addyosmani
- * Licensed under the MIT license
+ * HTML5validator
  */
 ;(function ( $, window, document, undefined ) {
 
@@ -13,11 +10,13 @@
             disableAutoValidation: false,
             messages: {
                 required: 'This field is required',
+                requiredCheckbox: 'This field is required',
                 minlength: 'The minimum length of this field is not met',
                 maxlength: 'The content of this field is too long',
                 email: 'This is not an email address'
             },
-            customValidators: {}
+            customValidators: {},
+            fieldParentSelector: '.entry'
         };
 
     // The actual plugin constructor
@@ -25,7 +24,7 @@
         this.element = element;
 
         this.options = $.extend( {}, defaults, options );
-        if ( this.options ) {
+        if ( options && options.messages ) {
             this.options.messages = $.extend( {}, defaults.messages, options.messages );
         }
 
@@ -49,7 +48,7 @@
         
         // Bind submit event
         $(this.element).submit($.proxy( this.onFormSubmit, this ));
-        //$('button').click($.proxy( this.onFormSubmit, this ));
+        // $('button').click($.proxy( this.onFormSubmit, this ));
     };
     
     Plugin.prototype.onFormSubmit = function() {
@@ -60,7 +59,8 @@
         
         // default validation
         if ( !this.options.disableAutoValidation ) {
-            this.validate( 'required', $(':required', this.element) );
+            this.validate( 'required', $('input[type!=checkbox][required]', this.element) );
+            this.validate( 'requiredCheckbox', $('input[type=checkbox][required]', this.element) );
             this.validate( 'minlength', $('input[data-minlength]', this.element) );
             this.validate( 'maxlength', $('input[data-maxlength]', this.element) );
             this.validate( 'email', $('input[type=email]', this.element) );
@@ -83,6 +83,8 @@
         
         if ( this.validationErrors.length > 0) {
             $(this.validationErrors).each( $.proxy( this.showError, this ) );
+            $(this.element).trigger('failed');
+            this.validationErrors[0].element.focus();
             return false;
         }
         
@@ -116,6 +118,12 @@
     Plugin.prototype.validators = {
         required: function( el ) {
             if ( !$(el).val() ) {
+                return false;
+            }
+            return true;
+        },
+        requiredCheckbox: function( el ) {
+            if ( !el.checked ) {
                 return false;
             }
             return true;
@@ -164,8 +172,12 @@
             var errorElement =  this.options.showError( errorObject.element, errorObject.type, message );
         } else {
             // fallback to the default action
-            var errorElement = $('<span />').addClass('error').text(message);
-            errorObject.element.after( errorElement );
+            errorObject.element.parents(this.options.fieldParentSelector).addClass('error');
+
+            if ( message ) {
+                var errorElement = $('<span />').addClass('error-inline').text(message);
+                errorObject.element.parents(this.options.fieldParentSelector).append( errorElement );
+            }
         }
         
         this.errorElements.push( errorElement );
