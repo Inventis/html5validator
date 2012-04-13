@@ -59,7 +59,7 @@
         
         // default validation
         if ( !this.options.disableAutoValidation ) {
-            this.validate( 'required', $('input[type!=checkbox][required]', this.element) );
+            this.validate( 'required', $('input[type!=checkbox][required], textarea[required]', this.element) );
             this.validate( 'requiredCheckbox', $('input[type=checkbox][required]', this.element) );
             this.validate( 'minlength', $('input[data-minlength]', this.element) );
             this.validate( 'maxlength', $('input[data-maxlength]', this.element) );
