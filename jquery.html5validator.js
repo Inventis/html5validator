@@ -147,7 +147,7 @@
             return false;
         },
         email: function( el ) {
-            var regEx = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            var regEx = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
             return regEx.test( $(el).val() );
         }
     };
