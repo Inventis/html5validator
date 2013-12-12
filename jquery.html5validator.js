@@ -16,7 +16,8 @@
                 email: 'This is not an email address'
             },
             customValidators: {},
-            fieldParentSelector: '.entry'
+            fieldParentSelector: '.entry',
+            errorMessageClass: 'error-inline'
         };
 
     // The actual plugin constructor
@@ -175,7 +176,7 @@
             errorObject.element.parents(this.options.fieldParentSelector).addClass('error');
 
             if ( message ) {
-                var errorElement = $('<span />').addClass('error-inline').text(message);
+                var errorElement = $('<span />').addClass(this.options.errorMessageClass).text(message);
                 errorObject.element.parents(this.options.fieldParentSelector).append( errorElement );
             }
         }
