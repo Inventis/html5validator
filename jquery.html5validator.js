@@ -172,11 +172,11 @@
             var errorElement =  this.options.showError( errorObject.element, errorObject.type, message );
         } else {
             // fallback to the default action
-            errorObject.element.parents(this.options.fieldParentSelector).addClass('error');
+            errorObject.element.parents(this.options.fieldParentSelector).first().addClass('error');
 
             if ( message ) {
                 var errorElement = $('<span />').addClass('error-inline').text(message);
-                errorObject.element.parents(this.options.fieldParentSelector).append( errorElement );
+                errorObject.element.parents(this.options.fieldParentSelector).first().append( errorElement );
             }
         }
         
