@@ -13,7 +13,8 @@
                 requiredCheckbox: 'This field is required',
                 minlength: 'The minimum length of this field is not met',
                 maxlength: 'The content of this field is too long',
-                email: 'This is not an email address'
+                email: 'This is not an email address',
+                tel: 'This is not an phone number'
             },
             customValidators: {},
             fieldParentSelector: '.entry'
@@ -64,6 +65,7 @@
             this.validate( 'minlength', $('input[data-minlength]', this.element) );
             this.validate( 'maxlength', $('input[data-maxlength]', this.element) );
             this.validate( 'email', $('input[type=email]', this.element) );
+            this.validate( 'tel', $('input[type=tel]', this.element) );
         }
         
         // validation rules set in the config
@@ -148,6 +150,13 @@
         },
         email: function( el ) {
             var regEx = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            return regEx.test( $(el).val() );
+        },
+        tel: function( el ) {
+            if ($(el).val().length == 0) {
+                return true;
+            }
+            var regEx = /^[\+]?[\d]{9,13}$/;
             return regEx.test( $(el).val() );
         }
     };
