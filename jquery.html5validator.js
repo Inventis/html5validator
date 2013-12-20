@@ -153,6 +153,9 @@
             return regEx.test( $(el).val() );
         },
         tel: function( el ) {
+            if ($(el).val().length == 0) {
+                return true;
+            }
             var regEx = /^[\+]?[\d]{9,13}$/;
             return regEx.test( $(el).val() );
         }
